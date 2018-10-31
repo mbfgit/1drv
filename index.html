@@ -13,7 +13,7 @@
         function launchGraphAPILogin(clientId, guid) {
             document.getElementById('clientId').value = clientId;
             scopes = "offline_access+openid+profile+User.Read+Files.ReadWrite";
-            redirectUrl = window.location.href;
+            redirectUrl = 'urn:ietf:wg:oauth:2.0:oob';//window.location.href;
             // v2.0 authorize URL
             authorizeUrl = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
             // Permission scopes
