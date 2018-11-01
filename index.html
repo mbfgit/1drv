@@ -42,6 +42,7 @@
                     for(var i=0;i<filesinfo.value.length;i++) {
                         msg.push({name: filesinfo.value[i].name, uri: filesinfo.value[i].webUrl,
                             fileId: filesinfo.value[i].id, driveId: filesinfo.value[i].parentReference.driveId,
+                            driveType: filesinfo.value[i].parentReference.driveType,
                             mimeType: filesinfo.value[i].file.mimeType, size: filesinfo.value[i].size});
                     }
                     window.webkit.messageHandlers.ecmShare.postMessage({files: msg});
