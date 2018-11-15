@@ -1,0 +1,16 @@
+<html>
+<head>
+<title>Fetch!</title>
+<script>
+function fetchIt()
+{
+    var url = document.getElementById('fetchUrl').value;
+    fetch(url,{"credentials":"omit","headers":{},"referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"GET","mode":"no-cors"});
+}
+</script>
+</head>
+<body>
+<br>Fetch this: <input type="text" id="fetchUrl"></input>
+<button id="fetchBtn" type="button" onclick="fetchIt()">Fetch!</button>
+</body>
+</html>
