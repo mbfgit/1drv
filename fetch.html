@@ -5,7 +5,8 @@
 function fetchIt()
 {
     var url = document.getElementById('fetchUrl').value;
-    fetch(url,{"credentials":"omit","headers":{},"referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"GET","mode":"no-cors"});
+    fetch(url,{"credentials":"omit","headers":{},"referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"GET","mode":"no-cors"})
+        .then(function(reponse) { console.dir(response)});
 }
 </script>
 </head>
