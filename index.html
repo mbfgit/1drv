@@ -52,6 +52,11 @@
                     }
                     window.webkit.messageHandlers.ecmShare.postMessage({files: msg});
                 }
+                // CEF
+                if (window.ecmShare) {
+                    window.ecmShare(JSON.stringify(files, null, 4));
+                }
+
             } else {
                 pickerResultDetails.innerHTML = "";
             }
@@ -63,6 +68,9 @@
         var oneDriveFilePickerError = 
             function ( e ) {
                 showResults('OneDrive Picker Error');
+                if (window.ecmError) {
+                    window.ecmError(JSON.stringify(e, null, 4));
+                }
                 console.log(e);
             }
         var oneDriveFilePickerSuccess = 
@@ -72,6 +80,9 @@
         var oneDriveFilePickerCancel =
             function ( ) {
                 showResults('OneDrive Picker Cancelled');
+                if (window.ecmCancel) {
+                    window.ecmCancel();
+                }
             }
         function getOptions(action, clientId) {
             if(!clientId) {
