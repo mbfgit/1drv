@@ -33,6 +33,16 @@
             requestUrl += "&state="+guid;
             var opened = window.open(requestUrl);
         }
+        function getInfo(filesinfo) {
+            var msg = [];
+            for(var i=0;i<filesinfo.value.length;i++) {
+                msg.push({name: filesinfo.value[i].name, uri: filesinfo.value[i].webUrl,
+                    fileId: filesinfo.value[i].id, driveId: filesinfo.value[i].parentReference.driveId,
+                    driveType: filesinfo.value[i].parentReference.driveType,
+                    mimeType: filesinfo.value[i].file.mimeType, size: filesinfo.value[i].size});
+            }
+            return msg;
+        }
         function showResults(result, filesinfo) {
             var pickerResult = document.getElementById("pickerResult");
             pickerResult.parentElement.classList.remove("hidden");
@@ -43,18 +53,13 @@
                 pickerResultDetails.innerHTML = resultData;
                 // OSX + iOS
                 if(window.webkit && window.webkit.messageHandlers.ecmShare) {
-                    var msg = [];
-                    for(var i=0;i<filesinfo.value.length;i++) {
-                        msg.push({name: filesinfo.value[i].name, uri: filesinfo.value[i].webUrl,
-                            fileId: filesinfo.value[i].id, driveId: filesinfo.value[i].parentReference.driveId,
-                            driveType: filesinfo.value[i].parentReference.driveType,
-                            mimeType: filesinfo.value[i].file.mimeType, size: filesinfo.value[i].size});
-                    }
-                    window.webkit.messageHandlers.ecmShare.postMessage({files: msg});
+                    var msg = { files : getInfo(filesinfo)};
+                    window.webkit.messageHandlers.ecmShare.postMessage(msg);
                 }
                 // CEF
                 if (window.ecmShare) {
-                    window.ecmShare(resultData);
+                    var msg = { files : getInfo(filesinfo)};
+                    window.ecmShare(JSON.stringify(msg,null,2));
                 }
 
             } else {
