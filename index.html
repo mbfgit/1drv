@@ -10,6 +10,23 @@
  
     <script type="text/javascript">
  
+        function redeemURL(url, timeout) {
+            timeout = timeout || 2000;
+            fetch(url,{"credentials":"include","headers":{},"referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"GET","mode":"no-cors"})
+                .then(function(reponse) {
+                setTimeout(function() {
+                    // OSX + iOS
+                    var msg = { url : url};
+                    if(window.webkit && window.webkit.messageHandlers.URLRedeemed) {
+                        window.webkit.messageHandlers.URLRedeemed.postMessage(msg);
+                    }
+                    // CEF
+                    else if (window.URLRedeemed) {
+                        window.URLRedeemed(JSON.stringify(msg,null,2));
+                    }
+                },timeout);
+            });
+        }
         function launchGraphAPILogin(clientId, guid) {
             if(!clientId) {
                 clientId = document.getElementById('clientId').value;
