@@ -3,7 +3,25 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
     <script type="text/javascript" src="OneDrive72.js"></script>
-    <script type="text/javascript" src="wxt-ecm.js">
+    <script type="text/javascript" src="wxt-ecm.js"></script>
+    <script type="text/javascript">
+        window.webkit = {
+            messageHandlers : 
+            {
+                URLRedeemed : {
+                    postMessage : function(url)
+                    {
+                        console.log(url);
+                    }
+                },
+                ecmShare : {
+                    postMessage : function(files)
+                    {
+                        console.log(files);
+                    }
+                },
+            }
+        };
     </script>
 </head>
 <body style="margin: 0;padding: 0;border: 0;">
