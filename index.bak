@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <!-- bootstrap reference used for styling the page -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <title>ECM OneDrive Integration</title>
+ 
+    <script type="text/javascript" src="https://js.live.net/v7.2/OneDrive.js"></script>
+ 
+    <script type="text/javascript">
+ 
+        function redeemURL(url, timeout) {
+            timeout = timeout || 2000;
+            fetch(url,{"credentials":"include","headers":{},"referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"GET","mode":"no-cors"})
+                .then(function(reponse) {
+                setTimeout(function() {
+                    // OSX + iOS
+                    var msg = { url : url};
+                    if(window.webkit && window.webkit.messageHandlers.URLRedeemed) {
+                        window.webkit.messageHandlers.URLRedeemed.postMessage(msg);
+                    }
+                    // CEF
+                    else if (window.URLRedeemed) {
+                        window.URLRedeemed(JSON.stringify(msg,null,2));
+                    }
+                },timeout);
+            });
+        }
+        function launchGraphAPILogin(clientId, guid) {
+            if(!clientId) {
+                clientId = document.getElementById('clientId').value;
+            } else {
+                document.getElementById('clientId').value = clientId;
+            }
+            scopes = "offline_access+openid+profile+User.Read+Files.ReadWrite.All";
+            //redirectUrl = 'https://login.microsoftonline.com/common/oauth2/nativeclient';
+            redirectUrl = window.location.href;
+            // v2.0 authorize URL
+            authorizeUrl = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
+            // Permission scopes
+            requestUrl = authorizeUrl + "?scope="+scopes;
+            // Code grant, will receive a code that can be redeemed for a token
+            requestUrl += "&response_type=code";
+            // client ID
+            requestUrl += "&client_id="+clientId;
+            // Add your app's redirect URL
+            requestUrl += "&redirect_uri="+redirectUrl;
+            requestUrl += "&response_mode=query"
+            requestUrl += "&state="+guid;
+            var opened = window.open(requestUrl);
+        }
+        function getInfo(filesinfo) {
+            var msg = [];
+            for(var i=0;i<filesinfo.value.length;i++) {
+                msg.push({name: filesinfo.value[i].name, uri: filesinfo.value[i].webUrl,
+                    fileId: filesinfo.value[i].id, driveId: filesinfo.value[i].parentReference.driveId,
+                    driveType: filesinfo.value[i].parentReference.driveType,
+                    mimeType: filesinfo.value[i].file.mimeType, size: filesinfo.value[i].size});
+            }
+            return msg;
+        }
+        function showResults(result, filesinfo) {
+            var pickerResult = document.getElementById("pickerResult");
+            pickerResult.parentElement.classList.remove("hidden");
+            pickerResult.innerHTML = result;
+            var pickerResultDetails = document.getElementById("pickerResultDetails");
+            if(filesinfo) {
+                resultData = JSON.stringify(filesinfo,null,2);
+                pickerResultDetails.innerHTML = resultData;
+                // OSX + iOS
+                if(window.webkit && window.webkit.messageHandlers.ecmShare) {
+                    var msg = { files : getInfo(filesinfo)};
+                    window.webkit.messageHandlers.ecmShare.postMessage(msg);
+                }
+                // CEF
+                if (window.ecmShare) {
+                    var msg = { files : getInfo(filesinfo)};
+                    window.ecmShare(JSON.stringify(msg,null,2));
+                }
+
+            } else {
+                pickerResultDetails.innerHTML = "";
+            }
+        }
+        var oneDriveFilePickerProgress = 
+            function ( p ) {
+                console.log("progress: " + p);
+            }
+        var oneDriveFilePickerError = 
+            function ( e ) {
+                showResults('OneDrive Picker Error');
+                if (window.ecmError) {
+                    window.ecmError(JSON.stringify(e, null, 4));
+                }
+                console.log(e);
+            }
+        var oneDriveFilePickerSuccess = 
+            function ( files ) {
+                showResults('OneDrive Picker Success', files);
+            }
+        var oneDriveFilePickerCancel =
+            function ( ) {
+                showResults('OneDrive Picker Cancelled');
+                if (window.ecmCancel) {
+                    window.ecmCancel();
+                }
+            }
+        function getOptions(action, clientId) {
+            if(!clientId) {
+                clientId = document.getElementById('clientId').value;
+            }
+            var odOptions = {
+                clientId: clientId,
+                action: action,
+                multiSelect: true,
+                openInNewWindow: true,
+                success: function(files) {
+                    oneDriveFilePickerSuccess(files);
+                },
+                cancel: function() {
+                    oneDriveFilePickerCancel();
+                },
+                error: function(e) {
+                    oneDriveFilePickerError(e);
+                },
+                redirectUri: window.location.href,
+                advanced: {
+                    queryParameters: "select=id,name,size,file,folder,image,webUrl,thumbnails,activities,malware,remoteItem,root,photo,searchResult,shared,createdBy,createdDateTime,lastModifiediBy,lastModifiedDateTime,cTag,eTag,permissions,parentReference,@microsoft.graph.sourceUrl"
+                }
+            };
+            /*
+            var apiEndpointVal = document.getElementById('apiEndpoint').value;
+            var accessTokenVal = document.getElementById('accessToken').value;
+            if(accessTokenVal) {
+                odOptions.advanced.accessToken = accessTokenVal;
+            }
+            if(apiEndpointVal) {
+                odOptions.advanced.endpointHint = apiEndpointVal;
+            }
+            */
+            return odOptions;
+        }
+        function getFolderForUpload() {
+            var odOptions = getOptions("query");
+            OneDrive.save( odOptions );
+        }
+        function launchOneDrivePicker(clientId,action) {
+            action = action || "query";
+            var odOptions = getOptions(action, clientId);
+            OneDrive.open( odOptions );
+        }
+    </script>
+</head>
+<body style="margin: 0;padding: 0;border: 0;">
+<div class="hidden">
+<button id="queryOneDrive" type="button" class="btn btn-primary" onclick="launchOneDrivePicker('','query')">Query</button>
+<button id="shareOneDrive" type="button" class="btn btn-primary" onclick="launchOneDrivePicker('','share')">Share</button>
+<button id="SelectFolderOneDrive" type="button" class="btn btn-primary" onclick="getFolderForUpload()">Dir</button>
+    AccessToken: <input id="accessToken" type="text"></input>
+    ApiEndpoint: <input id="apiEndpoint" type="text"></input>
+    ClientId: <input id="clientId" type="text"></input>
+    <div id="errorMessage" class="text-danger"></div>
+    <div class="hidden">
+        <h3 id="pickerResult"></h3>
+        <pre class="well" id="pickerResultDetails"></pre>
+    </div>
+<button id="GraphLogin" type="button" class="btn btn-primary" onclick="launchGraphAPILogin()">Login</button>
+</div> 
+</body>
+</html>
