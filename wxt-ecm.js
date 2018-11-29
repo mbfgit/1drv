@@ -1,37 +1,3 @@
-        function redeemURL(url, timeout) {
-            timeout = timeout || 2000;
-            fetch(url,{"credentials":"include","headers":{},"referrerPolicy":"no-referrer-when-downgrade","body":null,"method":"GET","mode":"no-cors"})
-                .then(function(reponse) {
-                setTimeout(function() {
-                    // OSX + iOS
-                    var msg = { url : url};
-                    if(window.webkit && window.webkit.messageHandlers.URLRedeemed) {
-                        window.webkit.messageHandlers.URLRedeemed.postMessage(msg);
-                    }
-                    // CEF
-                    else if (window.URLRedeemed) {
-                        window.URLRedeemed(JSON.stringify(msg,null,2));
-                    }
-                },timeout);
-            });
-        }
-        function launchGraphAPILogin(clientId, guid) {
-            scopes = "offline_access+openid+profile+User.Read+Files.ReadWrite.All";
-            redirectUrl = window.location.href;
-            // v2.0 authorize URL
-            authorizeUrl = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
-            // Permission scopes
-            requestUrl = authorizeUrl + "?scope="+scopes;
-            // Code grant, will receive a code that can be redeemed for a token
-            requestUrl += "&response_type=code";
-            // client ID
-            requestUrl += "&client_id="+clientId;
-            // Add your app's redirect URL
-            requestUrl += "&redirect_uri="+redirectUrl;
-            requestUrl += "&response_mode=query"
-            requestUrl += "&state="+guid;
-            var opened = window.open(requestUrl);
-        }
         function getInfo(filesinfo) {
             var msg = [];
             for(var i=0;i<filesinfo.value.length;i++) {
