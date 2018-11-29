@@ -51,7 +51,7 @@
                 },
                 redirectUri: window.location.href,
                 advanced: {
-                    queryParameters: "select=id,name,size,file,folder,image,webUrl,thumbnails,activities,remoteItem,root,photo,searchResult,shared,createdBy,createdDateTime,lastModifiediBy,lastModifiedDateTime,cTag,eTag,permissions,parentReference,@microsoft.graph.sourceUrl"
+                    queryParameters: "select=id,name,size,file,folder,webUrl,parentReference"
                 }
             };
             return odOptions;
