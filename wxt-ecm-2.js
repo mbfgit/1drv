@@ -50,7 +50,7 @@
                 },
                 redirectUri: window.location.href,
                 advanced: {
-                    queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepoint&expand=thumbnails"
+                    queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepointId&expand=thumbnails"
                 }
             };
             return odOptions;
