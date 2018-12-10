@@ -60,7 +60,7 @@
                     {
                         odOptions.advanced.loginHint = additionalOptions.advanced.optionHint;
                     }
-                    if(additionalOptions.advanced.isConsumerAccount)
+                    if(typeof additionalOptions.advanced.isConsumerAccount !== "undefined")
                     {
                         odOptions.advanced.isConsumerAccount = additionalOptions.advanced.isConsumerAccount;
                     }
