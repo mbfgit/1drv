@@ -58,7 +58,7 @@
                 if(additionalOptions.advanced) {
                     if(additionalOptions.advanced.loginHint)
                     {
-                        odOptions.advanced.loginHint = additionalOptions.advanced.optionHint;
+                        odOptions.advanced.loginHint = additionalOptions.advanced.loginHint;
                     }
                     if(typeof additionalOptions.advanced.isConsumerAccount !== "undefined")
                     {
