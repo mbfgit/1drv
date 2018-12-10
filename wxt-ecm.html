@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <script type="text/javascript" src="OneDrive72.js"></script>
+    <script type="text/javascript" src="wxt-ecm.js"></script>
+    <script type="text/javascript">
+        window.webkit = {
+            messageHandlers : 
+            {
+                URLRedeemed : {
+                    postMessage : function(url)
+                    {
+                        console.log(url);
+                    }
+                },
+                ecmShare : {
+                    postMessage : function(files)
+                    {
+                        console.log(files);
+                    }
+                },
+            }
+        };
+    </script>
+</head>
+<body style="margin: 0;padding: 0;border: 0;">
+<textarea id="additionalOptions" columns=80 rows=5></textarea>
+<button id="queryOneDrive" type="button" class="btn btn-primary" onclick="launchOneDrivePicker('9667a420-3949-4dc9-93e2-afc3b575f065','query')">Query</button></body>
+<input type="text" id="userEmail"></input>
+<input type="checkbox" id="isConsumerAccount"></input>
+<button id="queryOneDrive" type="button" class="btn btn-primary" onclick="launchOneDrivePicker('9667a420-3949-4dc9-93e2-afc3b575f065','query',document.getElementById('userEmail').value, document.getElementById('isConsumerAccount').value)">Query+</button></body>
+</html>
