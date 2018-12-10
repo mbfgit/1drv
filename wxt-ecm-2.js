@@ -53,6 +53,27 @@
                     queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepointIds&expand=thumbnails"
                 }
             };
+            var additionalOptions = JSON.parse(document.getElementById('additionalOptions'));
+            if(additionalOptions) {
+                if(additionalOptions.advanced) {
+                    if(additionalOptions.advanced.loginHint)
+                    {
+                        odOptions.advanced.loginHint = additionalOptions.advanced.optionHint;
+                    }
+                    if(additionalOptions.advanced.isConsumerAccount)
+                    {
+                        odOptions.advanced.isConsumerAccount = additionalOptions.advanced.isConsumerAccount;
+                    }
+                    if(additionalOptions.advanced.endpointHint)
+                    {
+                        odOptions.advanced.endpointHint = additionalOptions.advanced.endpointHint;
+                    }
+                    if(additionalOptions.advanced.accessToken)
+                    {
+                        odOptions.advanced.accessToken = additionalOptions.advanced.accessToken;
+                    }
+                }
+            }
             return odOptions;
         }
         function launchOneDrivePicker(clientId,action) {
