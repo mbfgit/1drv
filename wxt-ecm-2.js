@@ -50,7 +50,10 @@
                 },
                 redirectUri: window.location.href,
                 advanced: {
-                    queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepointIds&expand=thumbnails"
+                    queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepointIds&expand=thumbnails",
+                    navigation: {
+                        sourceTypes: ["OneDrive", "Sites"]
+                    }
                 }
             };
             try {
