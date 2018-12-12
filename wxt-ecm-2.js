@@ -53,36 +53,41 @@
                     queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepointIds&expand=thumbnails"
                 }
             };
-            var additionalOptions = JSON.parse(document.getElementById('additionalOptions').value || '{}');
-            if(additionalOptions) {
-                if(additionalOptions.advanced) {
-                    if(additionalOptions.advanced.loginHint)
-                    {
-                        odOptions.advanced.loginHint = additionalOptions.advanced.loginHint;
+            try {
+                var additionalOptions = JSON.parse(document.getElementById('additionalOptions').value || '{}');
+                if(additionalOptions) {
+                    if(additionalOptions.advanced) {
+                        if(additionalOptions.advanced.loginHint)
+                        {
+                            odOptions.advanced.loginHint = additionalOptions.advanced.loginHint;
+                        }
+                        if(typeof additionalOptions.advanced.isConsumerAccount !== "undefined")
+                        {
+                            odOptions.advanced.isConsumerAccount = additionalOptions.advanced.isConsumerAccount;
+                        }
+                        if(additionalOptions.advanced.endpointHint)
+                        {
+                            odOptions.advanced.endpointHint = additionalOptions.advanced.endpointHint;
+                        }
+                        if(additionalOptions.advanced.accessToken)
+                        {
+                            odOptions.advanced.accessToken = additionalOptions.advanced.accessToken;
+                        }
                     }
-                    if(typeof additionalOptions.advanced.isConsumerAccount !== "undefined")
-                    {
-                        odOptions.advanced.isConsumerAccount = additionalOptions.advanced.isConsumerAccount;
-                    }
-                    if(additionalOptions.advanced.endpointHint)
-                    {
-                        odOptions.advanced.endpointHint = additionalOptions.advanced.endpointHint;
-                    }
-                    if(additionalOptions.advanced.accessToken)
-                    {
-                        odOptions.advanced.accessToken = additionalOptions.advanced.accessToken;
-                    }
-                }
-                if(additionalOptions.navigation) {
-                    if(additionalOptions.navigation.sourceTypes)
-                    {
-                        if(odOptions.navigation) {
-                            odOptions.navigation.sourceTypes = additionalOptions.navigation.sourceTypes;
-                        } else {
-                            odOptions.navigation = { sourceTypes : additionalOptions.navigation.sourceTypes };
+                    if(additionalOptions.navigation) {
+                        if(additionalOptions.navigation.sourceTypes)
+                        {
+                            if(odOptions.navigation) {
+                                odOptions.navigation.sourceTypes = additionalOptions.navigation.sourceTypes;
+                            } else {
+                                odOptions.navigation = { sourceTypes : additionalOptions.navigation.sourceTypes };
+                            }
                         }
                     }
                 }
+            }
+            catch(e) {
+                console.error(e);
             }
             return odOptions;
         }
