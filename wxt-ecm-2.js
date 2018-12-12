@@ -53,7 +53,7 @@
                     queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepointIds&expand=thumbnails"
                 }
             };
-            var additionalOptions = JSON.parse(document.getElementById('additionalOptions').value);
+            var additionalOptions = JSON.parse(document.getElementById('additionalOptions').value || '{}');
             if(additionalOptions) {
                 if(additionalOptions.advanced) {
                     if(additionalOptions.advanced.loginHint)
