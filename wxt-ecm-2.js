@@ -73,6 +73,16 @@
                         odOptions.advanced.accessToken = additionalOptions.advanced.accessToken;
                     }
                 }
+                if(additionalOptions.navigation) {
+                    if(additionalOptions.navigation.sourceTypes)
+                    {
+                        if(odOptions.navigation) {
+                            odOptions.navigation.sourceTypes = additionalOptions.navigation.sourceTypes;
+                        } else {
+                            odOptions.navigation = { sourceTypes : additionalOptions.navigation.sourceTypes };
+                        }
+                    }
+                }
             }
             return odOptions;
         }
