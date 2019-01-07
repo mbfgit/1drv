@@ -4,7 +4,9 @@ function getInfo(filesinfo) {
 	msg.push({name: filesinfo.value[i].name, uri: filesinfo.value[i].webUrl,
 	    fileId: filesinfo.value[i].id, driveId: filesinfo.value[i].parentReference.driveId,
 	    driveType: filesinfo.value[i].parentReference.driveType,
-	    mimeType: filesinfo.value[i].file.mimeType, size: filesinfo.value[i].size});
+	    mimeType: filesinfo.value[i].file.mimeType, size: filesinfo.value[i].size,
+            listId: filesinfo.value[i].sharepointIds.listId,
+            listItemId: filesinfo.value[i].sharepointIds.listItemId});
     }
     return msg;
 }
@@ -50,7 +52,7 @@ function getOptions(clientId, loginHint, isConsumerAccount, action) {
 	},
 	redirectUri: window.location.href,
 	advanced: {
-		queryParameters: "select=id,name,size,file,folder,webUrl,parentReference",
+		queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepointIds",
 		navigation: {
 			sourceTypes: ["OneDrive", "Sites"]
 		}
