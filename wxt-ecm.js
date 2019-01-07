@@ -1,12 +1,17 @@
 function getInfo(filesinfo) {
     var msg = [];
     for(var i=0;i<filesinfo.value.length;i++) {
-	msg.push({name: filesinfo.value[i].name, uri: filesinfo.value[i].webUrl,
+	var file = {name: filesinfo.value[i].name, uri: filesinfo.value[i].webUrl,
 	    fileId: filesinfo.value[i].id, driveId: filesinfo.value[i].parentReference.driveId,
 	    driveType: filesinfo.value[i].parentReference.driveType,
 	    mimeType: filesinfo.value[i].file.mimeType, size: filesinfo.value[i].size,
-            listId: filesinfo.value[i].sharepointIds.listId,
-            listItemId: filesinfo.value[i].sharepointIds.listItemId});
+            listId: "",
+            listItemId: ""};
+        if(filesinfo.value[i].sharepointIds) {
+            file.listId = filesinfo.value[i].sharepointIds.listId;
+            file.listItemId = filesinfo.value[i].sharepointIds.listItemId;
+        }
+        msg.push(file);
     }
     return msg;
 }
