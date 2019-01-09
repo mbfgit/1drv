@@ -14,8 +14,8 @@ function getInfo(filesinfo) {
                 listItemId: ""
             };
             if(filesinfo.value[i].sharepointIds) {
-                file.listId = filesinfo.value[i].sharepointIds.listId;
-                file.listItemId = filesinfo.value[i].sharepointIds.listItemId;
+                file.listId = filesinfo.value[i].sharepointIds.listId || "";
+                file.listItemId = filesinfo.value[i].sharepointIds.listItemId || "";
             }
             if(filesinfo.value[i].file) {
                 file.mimeType = filesinfo.value[i].file.mimeType || "";
