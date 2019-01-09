@@ -1,17 +1,31 @@
 function getInfo(filesinfo) {
     var msg = [];
-    for(var i=0;i<filesinfo.value.length;i++) {
-	var file = {name: filesinfo.value[i].name, uri: filesinfo.value[i].webUrl,
-	    fileId: filesinfo.value[i].id, driveId: filesinfo.value[i].parentReference.driveId,
-	    driveType: filesinfo.value[i].parentReference.driveType,
-	    mimeType: filesinfo.value[i].file.mimeType, size: filesinfo.value[i].size,
-            listId: "",
-            listItemId: ""};
-        if(filesinfo.value[i].sharepointIds) {
-            file.listId = filesinfo.value[i].sharepointIds.listId;
-            file.listItemId = filesinfo.value[i].sharepointIds.listItemId;
+    if(filesinfo.value) {
+        for(var i=0;i<filesinfo.value.length;i++) {
+            var file = {
+                name: filesinfo.value[i].name,
+                uri: filesinfo.value[i].webUrl,
+                fileId: filesinfo.value[i].id,
+                size: filesinfo.value[i].size,
+                driveId: "",
+                driveType: "",
+                mimeType: "",
+                listId: "",
+                listItemId: ""
+            };
+            if(filesinfo.value[i].sharepointIds) {
+                file.listId = filesinfo.value[i].sharepointIds.listId;
+                file.listItemId = filesinfo.value[i].sharepointIds.listItemId;
+            }
+            if(filesinfo.value[i].file) {
+                file.mimeType = filesinfo.value[i].file.mimeType || "";
+            }
+            if(filesinfo.value[i].parentReference) {
+                file.driveId = filesinfo.value[i].parentReference.driveId || "";
+                file.driveType = filesinfo.value[i].parentReference.driveType || "";
+            }
+            msg.push(file);
         }
-        msg.push(file);
     }
     return msg;
 }
