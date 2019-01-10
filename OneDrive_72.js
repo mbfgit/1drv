@@ -998,9 +998,7 @@ module.exports = function (require, exports, OneDriveApp_1, Oauth_1) {
                     uxConfig.parentDiv.appendChild(iframe);
                     _this.iframe = iframe;
                 } else {
-                debugger;
                     return popupView.openPopup(pickerUrl).then(function () {
-                    debugger;
                         resolve({ type: 'cancel' });
                     });
                 }
@@ -1731,7 +1729,6 @@ module.exports = function (require, exports, OneDriveApp_1, Oauth_1) {
                 Popup.getCurrentPopup().getPopupWindow().location.href = url;
             } else {
                 this._url = url;
-                debugger;
                 this._popup = window.open(url, '_blank', Popup.createPopupFeatures());
                 if (!this._popup) {
                     ErrorHandler_1.throwError(new OneDriveSdkError_1.default(ErrorType_1.default.popupOpen, 'popup window is disconnected')).exposeToPublic();
