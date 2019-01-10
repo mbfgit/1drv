@@ -22,11 +22,12 @@
                 },
             }
         };
-        window._open = window.open;
-        window.open = function(url, name, features) {
-            _url = url;
-            return window._open(_url, name, features);
-        };
+        function hashHandler(e) {
+            debugger;
+            console.log('The hash has changed!');
+        }
+
+        window.addEventListener('hashchange', hashHandler, false);
     </script>
 </head>
 <body style="margin: 0;padding: 0;border: 0;">
