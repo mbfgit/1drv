@@ -73,6 +73,7 @@ function getOptions(clientId, loginHint, isConsumerAccount, action) {
 	advanced: {
 		queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepointIds",
 		navigation: {
+			disable: true,
 			sourceTypes: ["OneDrive", "Sites"]
 		}
 	}
