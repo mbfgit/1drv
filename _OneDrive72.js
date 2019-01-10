@@ -1725,11 +1725,13 @@ module.exports = function (require, exports, OneDriveApp_1, Oauth_1) {
             var _this = this;
             UrlUtilities_1.validateUrlProtocol(url);
             if (Popup.getCurrentPopup().isPopupOpen()) {
+                debugger;
                 Logging_1.default.logMessage('leaving current url: ' + this._url);
                 this._url = url;
                 Popup.getCurrentPopup().getPopupWindow().location.href = url;
             } else {
                 this._url = url;
+                debugger;
                 this._popup = window.open(url, '_blank', Popup.createPopupFeatures());
                 if (!this._popup) {
                     ErrorHandler_1.throwError(new OneDriveSdkError_1.default(ErrorType_1.default.popupOpen, 'popup window is disconnected')).exposeToPublic();
