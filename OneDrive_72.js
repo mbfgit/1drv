@@ -982,8 +982,8 @@ module.exports = function (require, exports, OneDriveApp_1, Oauth_1) {
                     sdk: Constants_1.default.SDK_VERSION_NUMBER,
                     e: uxConfig.entryLocation,
                     st: uxConfig.sourceTypes,
-                    sn: !uxConfig.parentDiv,
-                    ss: !uxConfig.parentDiv
+                    sn: false,
+                    ss: false
                 };
                 var pickerUrl = UrlUtilities_1.appendQueryString(_this.url, 'picker', JSON.stringify(pickerOption));
                 Logging_1.default.logMessage('invoke picker with url: ' + pickerUrl);
@@ -1723,7 +1723,6 @@ module.exports = function (require, exports, OneDriveApp_1, Oauth_1) {
             var _this = this;
             UrlUtilities_1.validateUrlProtocol(url);
             if (Popup.getCurrentPopup().isPopupOpen()) {
-                debugger;
                 Logging_1.default.logMessage('leaving current url: ' + this._url);
                 this._url = url;
                 Popup.getCurrentPopup().getPopupWindow().location.href = url;
