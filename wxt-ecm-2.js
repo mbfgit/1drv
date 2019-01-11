@@ -37,6 +37,7 @@ var oneDriveFilePickerError =
     }
 var oneDriveFilePickerSuccess = 
     function ( filesinfo ) {
+	console.time("ParseFiles");
 	// OSX + iOS
 	if(window.webkit && window.webkit.messageHandlers.ecmShare) {
 	    var msg = { files : getInfo(filesinfo)};
@@ -47,6 +48,7 @@ var oneDriveFilePickerSuccess =
 	    var msg = { files : getInfo(filesinfo)};
 	    window.ecmShare(JSON.stringify(msg,null,2));
 	}
+	console.timeEnd("ParseFiles");
     }
 var oneDriveFilePickerCancel =
     function ( ) {
