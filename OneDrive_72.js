@@ -982,8 +982,8 @@ module.exports = function (require, exports, OneDriveApp_1, Oauth_1) {
                     sdk: Constants_1.default.SDK_VERSION_NUMBER,
                     e: uxConfig.entryLocation,
                     st: uxConfig.sourceTypes,
-                    sn: false,
-                    ss: false
+                    sn: !uxConfig.parentDiv,
+                    ss: !uxConfig.parentDiv
                 };
                 var pickerUrl = UrlUtilities_1.appendQueryString(_this.url, 'picker', JSON.stringify(pickerOption));
                 Logging_1.default.logMessage('invoke picker with url: ' + pickerUrl);
