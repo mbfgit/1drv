@@ -129,6 +129,6 @@ function launchOneDrivePicker(clientId, loginHint, isConsumerAccount, action) {
 function launchOneDrivePickerInDiv(clientId, parentDiv, loginHint, isConsumerAccount, action) {
     action = action || "query";
     var odOptions = getOptions(clientId, loginHint, isConsumerAccount, action);
-        odOptions.advanced.iframeParentDiv = true;
+        odOptions.advanced.iframeParentDiv = parentDiv;
     OneDrive.open( odOptions );
 }
