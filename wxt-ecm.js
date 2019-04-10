@@ -57,6 +57,7 @@ var oneDriveFilePickerCancel =
 function getOptions(clientId, loginHint, isConsumerAccount, action) {
     var odOptions = {
 	clientId: clientId,
+        accountSwitchEnabled: false,
 	action: action,
 	multiSelect: true,
 	openInNewWindow: true,
