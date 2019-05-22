@@ -72,10 +72,7 @@ function getOptions(clientId, loginHint, isConsumerAccount, action) {
 	},
 	redirectUri: window.location.href,
 	advanced: {
-		queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepointIds",
-		navigation: {
-			sourceTypes: ["OneDrive", "Sites"]
-		}
+		queryParameters: "select=id,name,size,file,folder,webUrl,parentReference,sharepointIds"
 	}
     };
     if(typeof loginHint !== "undefined" && typeof isConsumerAccount !== "undefined") {
